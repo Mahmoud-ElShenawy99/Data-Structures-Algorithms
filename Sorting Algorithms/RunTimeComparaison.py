@@ -40,6 +40,43 @@ def insertion_sort(list: list):
     end = time.time()
     return end - begin
 
+def merge(left_list:list,right_list:list,list:list):
+
+    left_length=len(left_list)
+    right_length=len(right_list)
+    i=j=k=0
+    while(i<left_length and j<right_length):
+        if(left_list[i]>right_list[j]):
+            list[k]=right_list[j]
+            j=j+1
+        else:
+            list[k] =left_list[i]
+            i = i +1
+        k = k + 1
+    while(i<left_length):
+        list[k] = left_list[i]
+        k = k + 1
+        i = i + 1
+    while(j<right_length):
+        list[k] = right_list[j]
+        k = k + 1
+        j = j + 1
+
+def merge_sort(list):
+    begin = time.time()
+    if len(list)<2:
+        return
+    mid=int(len(list)/2)
+    left_list=list[:mid]
+    right_list=list[mid:]
+    merge_sort(left_list)
+    merge_sort(right_list)
+    merge(left_list,right_list,list)
+    end = time.time()
+    return end - begin
+
+
+
 def create_random_list(number_of_elements=100, sorted=False):
     list = []
     while (number_of_elements > 0):
@@ -54,14 +91,16 @@ if __name__ == '__main__':
     list = create_random_list(10000)
     listcopy1 = list.copy()
     listcopy2 = list.copy()
-
+    listcopy3 = list.copy()
 
     selection_time = selection_sort(list)
     insertione_time = insertion_sort(listcopy1)
-    bubble_time = bubble_sort(listcopy2)
+    merge_time = merge_sort(listcopy2)
+    bubble_time = bubble_sort(listcopy3)
     print("Array size is ",str(len(list)))
-    print("Running time for Bubble sort  is " + str(bubble_time * 100) + "ms")
+    print("Running time for Merge sort  is " + str(merge_time * 100) + "ms")
     print("Running time for Selection sort  is " + str(selection_time * 100) + "ms")
     print("Running time for Insertion sort  is " + str(insertione_time * 100) + "ms")
+    print("Running time for Bubble sort  is " + str(bubble_time * 100) + "ms")
 
 
