@@ -75,7 +75,29 @@ def merge_sort(list):
     end = time.time()
     return end - begin
 
+def partition(list:list,start,end):
+    randomindex = random.randint(start, end)
+    list[randomindex], list[end] = list[end], list[randomindex]
+    pindex=start
+    pivot=list[end]
+    for i in range(start,end,1):
+        if(list[i]<=pivot):
+            list[i],list[pindex]=list[pindex],list[i]
+            pindex=pindex+1
+    list[end], list[pindex] = list[pindex], list[end]
+    return pindex
 
+def quicksort(list:list):
+    begin = time.time()
+    quicksortalgorithm(list,0,len(list)-1)
+    end = time.time()
+    return end - begin
+
+def quicksortalgorithm(list:list,start,end):
+    if(start<end):
+        pindex=partition(list,start,end)
+        quicksortalgorithm(list,start,pindex-1)
+        quicksortalgorithm(list,pindex+1,end)
 
 def create_random_list(number_of_elements=100, sorted=False):
     list = []
@@ -89,15 +111,18 @@ def create_random_list(number_of_elements=100, sorted=False):
 
 if __name__ == '__main__':
     list = create_random_list(10000)
-    listcopy1 = list.copy()
-    listcopy2 = list.copy()
-    listcopy3 = list.copy()
+    list_copy1 = list.copy()
+    list_copy2 = list.copy()
+    list_copy3 = list.copy()
+    list_copy4 = list.copy()
 
     selection_time = selection_sort(list)
-    insertione_time = insertion_sort(listcopy1)
-    merge_time = merge_sort(listcopy2)
-    bubble_time = bubble_sort(listcopy3)
+    insertione_time = insertion_sort(list_copy1)
+    merge_time = merge_sort(list_copy2)
+    bubble_time = bubble_sort(list_copy3)
+    quick_time=quicksort(list_copy4)
     print("Array size is ",str(len(list)))
+    print("Running time for Quick sort  is " + str(quick_time * 100) + "ms")
     print("Running time for Merge sort  is " + str(merge_time * 100) + "ms")
     print("Running time for Selection sort  is " + str(selection_time * 100) + "ms")
     print("Running time for Insertion sort  is " + str(insertione_time * 100) + "ms")
